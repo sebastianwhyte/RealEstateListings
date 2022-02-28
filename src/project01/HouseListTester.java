@@ -25,9 +25,8 @@ public class HouseListTester
 		
 		// -------------------------------------------------------
 		
-		/* Read in seven different Requirement objects with varying upper and lower limits 
-		 * for price, area and number of bedrooms.
-		 */
+		// Read in seven different Requirement objects with varying upper and lower limits 
+		// for price, area and number of bedrooms.
 		
 		// Create 7 Requirement objects
 		Requirement r1 = new Requirement(1000000, 7000000, 100, 5000, 0, 10);
@@ -39,5 +38,6 @@ public class HouseListTester
 		Requirement r7 = new Requirement(100000, 500000, 2500, 5000, 4, 6);
 		
 		availableHouses.printHouses(r1);
+		availableHouses.printHouses(r2);
 	}
 }

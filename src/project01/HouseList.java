@@ -44,7 +44,7 @@ public class HouseList
 		 
 		int houseCount = 0;
 		
-		// While file has more data & line is not null, create House objects
+		// While file has more data, create House objects
 		while (fileIn.hasNext())
 		{
 			// Take the line & save its length
@@ -65,14 +65,14 @@ public class HouseList
 				House house = new House(address, price, area, numBedrooms);
 				
 				// Testing output - Debugging
-				System.out.println(house);
+				//System.out.println(house);
 				
 				// Add new house to houseList
 				houseList.add(house);
 				houseCount++;
 				
 				// Testing for houseCount
-				System.out.println(houseCount);
+				//System.out.println(houseCount);
 				
 			}
 		}
@@ -86,7 +86,16 @@ public class HouseList
 	{
 		for (House h: houseList)
 		{
-			System.out.println(h);
+			int housePrice = h.getPrice();
+			int houseArea = h.getArea();
+			int beds = h.getNumBedrooms();
+			
+			if (housePrice >= r.getMinimumPrice() && housePrice <= r.getMaximumPrice() && 
+					houseArea >= r.getMinimumArea() && houseArea <= r.getMaximumArea() && 
+					beds >= r.getMinimumNumberBedrooms() && beds <= r.getMaximumNumberBedrooms())
+			{	
+				System.out.println(h.toString());
+			}
 		}
 	}
 	
@@ -96,12 +105,10 @@ public class HouseList
 	 * @param a Requirement object
 	 * @return String: result of concatenated string of a description of the houses 
 	 * 
-	 */
-	
-	/*
+	 */	
 	public String getHouses(Requirement r)
 	{
-		 
+		return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
 	}
-	*/
+
 }
