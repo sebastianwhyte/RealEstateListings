@@ -13,6 +13,10 @@ import java.util.Scanner;
  * @version February 5, 2022
  */
 
+/*
+ * NEED TO FIX: CONDITIONS IN GET HOUSES METHOD & PRINT HOUSES METHOD ARE MISSED. SOME RESULTS ARE
+ * NOT SHOWING UP WHEN PASSING THE REQUIREMENTS
+ */
 
 public class HouseList 
 {
@@ -42,18 +46,17 @@ public class HouseList
 			System.out.println("File " + filename + " was not found");
 		}
 		 
-		int houseCount = 0;
 		
 		// While file has more data, create House objects
 		while (fileIn.hasNext())
 		{
 			// Take the line & save its length
-			String line = fileIn.nextLine();
-			int lineLength = line.length();
+			//String line = fileIn.nextLine();
+			//int lineLength = line.length();
 			
 			// Read line & make a new House object
-			for (int i = 0; i <= lineLength; i++)
-			{
+			//for (int i = 0; i < lineLength; i++)
+			//{
 				// Temp variables to save data for each house
 				// Use split method 
 				// While hasNext, read string, and then numbers
@@ -69,30 +72,26 @@ public class HouseList
 				
 				// Add new house to houseList
 				houseList.add(house);
-				houseCount++;
+				//houseCount++;
 				
-				// Testing for houseCount
+				// Testing - for houseCount
 				//System.out.println(houseCount);
 				
-			}
+			//}
 		}
 	}
 	
 	// ----------------------------------------------------------------
 	
-	// Print all the houses that satisfy the requirement r 
-	// @param a Requirement object
+	/* Print all the houses that satisfy the requirement r 
+	 * @param a Requirement object
+	 */
 	public void printHouses(Requirement r)
 	{
 		for (House h: houseList)
 		{
-			int housePrice = h.getPrice();
-			int houseArea = h.getArea();
-			int beds = h.getNumBedrooms();
 			
-			if (housePrice >= r.getMinimumPrice() && housePrice <= r.getMaximumPrice() && 
-					houseArea >= r.getMinimumArea() && houseArea <= r.getMaximumArea() && 
-					beds >= r.getMinimumNumberBedrooms() && beds <= r.getMaximumNumberBedrooms())
+			if (h.satisfies(r))
 			{	
 				System.out.println(h.toString());
 			}
@@ -107,8 +106,18 @@ public class HouseList
 	 * 
 	 */	
 	public String getHouses(Requirement r)
-	{
-		return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
+	{	
+		for (House h: houseList)
+		{
+			if (h.satisfies(r))
+			{
+				return h.toString();
+			}
+		}
+		return "No results";
+			
+		
+		//return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
 	}
 
 }

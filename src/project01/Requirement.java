@@ -34,7 +34,7 @@ public class Requirement
 		this.maximumNumberOfBedrooms = maximumNumberOfBedrooms;
 		
 		House house = new House();
-		house.satisfies(this);
+		//house.satisfies(this);
 	}
 	
 	// ---------------------------------------------------------------
