@@ -21,8 +21,7 @@ public class Requirement
 	// --------------------------------------------------------------
 	
 	/* Constructor 
-	 * @param input from user regarding requirements for their house
-	 * 
+	 * @param input from user regarding requirements for their house 
 	 */
 	public Requirement(int minimumPrice, int maximumPrice, int minimumArea, int maximumArea, int minimumNumberOfBedrooms, int maximumNumberOfBedrooms)
 	{
@@ -33,13 +32,13 @@ public class Requirement
 		this.minimumNumberOfBedrooms = minimumNumberOfBedrooms;
 		this.maximumNumberOfBedrooms = maximumNumberOfBedrooms;
 		
+		// Create a House object
 		House house = new House();
-		//house.satisfies(this);
 	}
 	
 	// ---------------------------------------------------------------
 	
-	/* Getter methods */
+	// Getter methods
 	public int getMinimumPrice()
 	{
 		return minimumPrice;

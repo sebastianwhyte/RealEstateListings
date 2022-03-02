@@ -1,7 +1,5 @@
 package project01;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -12,10 +10,9 @@ import java.util.Scanner;
  *
  */
 
-
 public class HouseListTester 
 {
-	public static void main(String[] args) throws IOException
+	public static void main(String[] args)
 	{
 		Scanner sc = new Scanner (System.in);
 		
@@ -24,19 +21,27 @@ public class HouseListTester
 		
 		// -------------------------------------------------------
 	
-		for (int i = 0; i <= 6; i++)
 		{
+			// Prompt user for their requirements & store them
 			System.out.println("Enter your requirements: ");
 			
+			System.out.print("Enter minimum price: ");
 			int minumumPrice = sc.nextInt();
+			System.out.print("Enter maximum price: ");
 			int maxiumumPrice = sc.nextInt();
+			System.out.print("Enter minimum area: ");
 			int minumumArea = sc.nextInt();
+			System.out.print("Enter maximum area: ");
 			int maxiumumArea = sc.nextInt();
+			System.out.print("Enter minimum number of beds: ");
 			int minumumNumberOfBedrooms = sc.nextInt();
+			System.out.print("Enter maximum number of beds: ");
 			int maxiumumNumberOfBedrooms = sc.nextInt();
 			
+			// Pass the variables as arguments into the Requirement object
 			Requirement r = new Requirement(minumumPrice, maxiumumPrice, minumumArea, maxiumumArea, minumumNumberOfBedrooms, maxiumumNumberOfBedrooms);
 			
+			// Print out the results
 			System.out.println("\nResults: ");
 			availableHouses.printHouses(r);
 			System.out.println();

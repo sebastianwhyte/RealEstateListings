@@ -13,11 +13,6 @@ import java.util.Scanner;
  * @version February 5, 2022
  */
 
-/*
- * NEED TO FIX: CONDITIONS IN GET HOUSES METHOD & PRINT HOUSES METHOD ARE MISSED. SOME RESULTS ARE
- * NOT SHOWING UP WHEN PASSING THE REQUIREMENTS
- */
-
 public class HouseList 
 {
 	// Instance variables
@@ -29,7 +24,9 @@ public class HouseList
 
 	// ----------------------------------------------------------------
 	
-	// Constructor
+	/* Constructor
+	 * @param name of the file 
+	 */
 	public HouseList(String filename)
 	{
 		// Scanner object to read file
@@ -39,7 +36,7 @@ public class HouseList
 		try
 		{
 			fileIn = new Scanner(new File(filename));
-			System.out.println("File uploaded successfully!");
+			
 		}
 		catch (FileNotFoundException e)
 		{
@@ -50,34 +47,17 @@ public class HouseList
 		// While file has more data, create House objects
 		while (fileIn.hasNext())
 		{
-			// Take the line & save its length
-			//String line = fileIn.nextLine();
-			//int lineLength = line.length();
-			
-			// Read line & make a new House object
-			//for (int i = 0; i < lineLength; i++)
-			//{
 				// Temp variables to save data for each house
-				// Use split method 
-				// While hasNext, read string, and then numbers
 				address = fileIn.next();
 				price = fileIn.nextInt();
 				area = fileIn.nextInt();
 				numBedrooms = fileIn.nextInt();
 			
+				// Create a House object and pass in the temp variables as arguments
 				House house = new House(address, price, area, numBedrooms);
 				
-				// Testing output - Debugging
-				//System.out.println(house);
-				
 				// Add new house to houseList
-				houseList.add(house);
-				//houseCount++;
-				
-				// Testing - for houseCount
-				//System.out.println(houseCount);
-				
-			//}
+				houseList.add(house);	
 		}
 	}
 	
@@ -114,10 +94,8 @@ public class HouseList
 				return h.toString();
 			}
 		}
-		return "No results";
-			
 		
-		//return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
+		return "No results";
 	}
 
 }

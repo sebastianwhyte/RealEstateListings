@@ -11,16 +11,15 @@ package project01;
 public class House 
 {	
 	// Instance variables
-	private String address;
-	private int price;
-	private int area;
+	private String address;		
+	private int price;			
+	private int area;			
 	private int numBedrooms;
 	
 	// ----------------------------------------------------------------
 	
 	/* Constructor 
 	 * @param information about the houses
-	 * 
 	 */
 	
 	public House()
@@ -65,7 +64,6 @@ public class House
 	
 	/* Checks to see if this house meets the requirements specified by r 
 	 * @param a Requirement object
-	 * 
 	 */
 	public boolean satisfies(Requirement r)
 	{
