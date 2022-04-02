@@ -5,6 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import user_interface.RealEstateScene;
+import user_interface.WindowPosition;
+
 /**
  * Contains an ArrayList of House objects. Reads the data from a file called houses.txt and 
  * adds them to the array list. Allows for searching of houses that satisfy requirements.
@@ -21,6 +27,9 @@ public class HouseList
 	private int area;
 	private int numBedrooms;
 	private String address;
+	private RealEstateScene rScene;
+	private Stage stage;
+	private Scene currentScene;
 
 	// ----------------------------------------------------------------
 	
@@ -57,7 +66,24 @@ public class HouseList
 				House house = new House(address, price, area, numBedrooms);
 				
 				// Add new house to houseList
-				houseList.add(house);	
+				houseList.add(house);
+				
+				stage = HouseListTester.getStage();
+						
+				// Call to set up the real estate view
+				createAndShowRealEstateView();
+		}
+	}
+	
+	// ----------------------------------------------------------------
+	
+
+	// TESTING OUTPUT
+	public void printHouses()
+	{
+		for (House h: houseList)
+		{
+			System.out.println(h);
 		}
 	}
 	
@@ -70,11 +96,12 @@ public class HouseList
 	{
 		for (House h: houseList)
 		{
-			
-			if (h.satisfies(r))
+			System.out.println(h.toString());
+			/*
 			{	
 				System.out.println(h.toString());
 			}
+			*/
 		}
 	}
 	
@@ -96,6 +123,50 @@ public class HouseList
 		}
 		
 		return "No results";
+	}
+	
+	
+	// ----------------------------------------------------------------
+	
+	/*
+	 * Creates and displays the Real Estate View
+	 */
+	private void createAndShowRealEstateView() 
+	{
+		// Create a new Real Estate Scene object 
+		rScene = new RealEstateScene("Real Estate View", this);
+		// Pass the Real Estate Scene into the current Scene;
+		currentScene = new Scene(rScene);
+		
+		// Make the view visible by installing it into the stage 
+		swapToView(currentScene);		
+	}
+
+	
+	// ----------------------------------------------------------------
+	
+	/*
+	 * Swaps to the current scence
+	 * 
+	 * @param current scene
+	 */
+	
+	private void swapToView(Scene currentScene) 
+	{
+		// Check if the scene is null
+		if (currentScene == null)
+	      {
+	    	  System.out.println("HouseList.swapToView(): Missing view for display"); 
+	    	  return;
+	      }
+		
+		// Swap the scene of the stage
+		stage.setScene(currentScene);
+		// Resize the stage to fit the scene size
+		stage.sizeToScene();
+		//Place in stage in center again 
+		WindowPosition.placeCenter(stage);
+		
 	}
 
 }
