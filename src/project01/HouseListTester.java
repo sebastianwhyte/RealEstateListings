@@ -53,7 +53,7 @@ public class HouseListTester extends Application
 			availableHouses = new HouseList("houses.txt");
 			// Test if houses from text file are being added to arraylist
 			System.out.println();
-			availableHouses.printHouses();
+			//availableHouses.printHouses();
 		}
 		catch(Exception e)
 		{

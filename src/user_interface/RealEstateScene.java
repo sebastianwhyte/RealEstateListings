@@ -1,9 +1,15 @@
 package user_interface;
 
+import java.util.Properties;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -14,11 +20,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import project01.HouseList;
+import project01.Requirement;
 
 /* This class provides the Scene for the main real estate view
  * 
  * @author Sebastian Whyte
- * @version 1.0, April 2 2022
+ * @version v1.0, April 2 2022
  *
  */
 
@@ -26,9 +33,17 @@ public class RealEstateScene extends Group
 {
 	// Instance variables
 	private String classname;
-	TextField minPriceTextField;
-	HouseList houseList;
-	
+	private HouseList houseList;
+	private TextField minPriceTextField;
+	private TextField maxPriceTextField;
+	private TextField minAreaTextField;
+	private TextField maxAreaTextField;
+	private TextField minBedsTextField;
+	private TextField maxBedsTextField;
+	private TextField chosenHomeTextField;
+	private Button findDreamHouseButton;
+	private Button notMyDreamButton;
+	private Button resetButton;
 	
 	// ------------------------------------------------------------------
 	
@@ -94,7 +109,7 @@ public class RealEstateScene extends Group
 	private Node createFormContent() 
 	{
 		// Create a vbox (vertical) container to hold the form
-		VBox vbox = new VBox(100);
+		VBox vbox = new VBox(20);
 		
 		// Create a grid layout
 		GridPane grid = new GridPane();
@@ -114,16 +129,226 @@ public class RealEstateScene extends Group
 		minPriceTextField.setMinSize(100, 20);
 		grid.add(minPriceTextField, 1, 0);
 		
-		// Add the grid to the vbox
+		// Create max price text label then add it to the grid
+		Text maxPriceLabel = new Text("Maximum Price: ");
+		maxPriceLabel.setWrappingWidth(150);
+		maxPriceLabel.setTextAlignment(TextAlignment.RIGHT); 
+		grid.add(maxPriceLabel, 0, 1);
+				
+		// Create TextField for max price
+		maxPriceTextField = new TextField();
+		maxPriceTextField.setMinSize(100, 20);
+		grid.add(maxPriceTextField, 1, 1);
+		
+		// Create minimum area label then add it to grid
+		Text minAreaLabel = new Text("Minimum Area: "); 
+		minAreaLabel.setWrappingWidth(150); 
+		minAreaLabel.setTextAlignment(TextAlignment.RIGHT); 
+		grid.add(minAreaLabel, 0, 2);
+				
+		// Create Text Field for minimum price 
+		minAreaTextField = new TextField();
+		minAreaTextField.setMinSize(100, 20); 
+		grid.add(minAreaTextField, 1, 2);
+				
+		// Create max area label then add it to grid
+		Text maxAreaLabel = new Text("Maximum Area: "); 
+		maxAreaLabel.setWrappingWidth(150); 
+		maxAreaLabel.setTextAlignment(TextAlignment.RIGHT); 
+		grid.add(maxAreaLabel, 0, 3);
+				
+		// Create text field for max area
+		maxAreaTextField = new TextField(); 
+		maxAreaTextField.setMinSize(100, 20);
+		grid.add(maxAreaTextField, 1, 3);
+				
+		// Create minimum beds label then add it to grid
+		Text minBedsLabel = new Text("Minimum Beds: "); 
+		minBedsLabel.setWrappingWidth(150); 
+		minBedsLabel.setTextAlignment(TextAlignment.RIGHT); 
+		grid.add(minBedsLabel, 0, 4);
+					
+		// Create text field for minimum beds
+		minBedsTextField = new TextField(); 
+		minBedsTextField.setMinSize(100, 20);
+		grid.add(minBedsTextField, 1, 4);
+				
+		// Create max beds label then add it to grid
+		Text maxBedsLabel = new Text("Maximum Beds: "); 
+		maxBedsLabel.setWrappingWidth(150); 
+		maxBedsLabel.setTextAlignment(TextAlignment.RIGHT); 
+		grid.add(maxBedsLabel, 0, 5);
+				
+		// Create text field for max beds
+		maxBedsTextField = new TextField(); 
+		grid.add(maxBedsTextField, 1, 5);
+		
+		// Create chosen home label then add it to grid
+		Text chosenHomeLabel = new Text("Chosen Home: "); 
+		chosenHomeLabel.setWrappingWidth(150); 
+		chosenHomeLabel.setTextAlignment(TextAlignment.RIGHT); 
+		grid.add(chosenHomeLabel, 0, 6);
+						
+		// Create text field for max beds
+		chosenHomeTextField = new TextField(); 
+		grid.add(chosenHomeTextField, 1, 6);
+				
+				
+		
+		// Create find dream house button & add event handler to it
+		findDreamHouseButton = new Button("Find my dream house!"); 
+		findDreamHouseButton.setAlignment(Pos.CENTER_LEFT);
+		findDreamHouseButton.setOnAction(new EventHandler<ActionEvent>() 
+		{
+			@Override
+			public void handle(ActionEvent e) 
+			{
+				// Do the calculation 
+				processAction(e);
+			}
+		});
+		
+		
+		// Create not my dream house button & add event handler to it
+		notMyDreamButton = new Button("Not my dream house - find me another!"); 
+		notMyDreamButton.setOnAction(new EventHandler<ActionEvent>() 
+		{
+			@Override
+			public void handle(ActionEvent e) 
+			{
+				// Do the calculation 
+				processAction(e);
+			} 
+		});
+		
+		
+		// Create find dream house button & add event handler to it
+		resetButton = new Button("Reset"); 
+		resetButton.setOnAction(new EventHandler<ActionEvent>() 
+		{
+			@Override
+			public void handle(ActionEvent e) 
+			{
+				// Do the calculation 
+				processAction(e);
+			} 
+		});
+				
+		
+		// Create hbox container to hold the buttons
+		HBox buttonContainer = new HBox(10);
+		buttonContainer.setAlignment(Pos.CENTER);
+		buttonContainer.setPadding(new Insets(5,20,5,20));
+		buttonContainer.getChildren().add(findDreamHouseButton); 
+		buttonContainer.getChildren().add(notMyDreamButton);
+		
+		// Create hbox container to hold rest button
+		HBox resetButtonContainer = new HBox();
+		resetButtonContainer.setAlignment(Pos.CENTER);
+		resetButtonContainer.getChildren().add(resetButton);
+		
+		
+		// Add the grid and button container to the vbox
 		vbox.getChildren().add(grid);
+		vbox.getChildren().add(buttonContainer);
+		vbox.getChildren().add(resetButtonContainer);
 		
 		return vbox;
 	}
 
 	
-	/**
-	 * 
+	// ------------------------------------------------------------------
+	
+	/*
+	 *  Process events from the GUI components
+	 *  
+	 *  @param event to process
 	 */
+	private void processAction(ActionEvent e) 
+	{
+		// Get the values from the TextFields
+		String minPriceValue = minPriceTextField.getText();
+		String maxPriceValue = maxPriceTextField.getText();
+		String minAreaValue = minAreaTextField.getText();
+		String maxAreaValue = maxAreaTextField.getText();
+		String minBedsValue = minBedsTextField.getText();
+		String maxBedsValue = maxBedsTextField.getText();
+		
+		
+		/* Check if the user leaves the TextFields empty
+		 * 
+		 * The program should assume the value of a field is 0 if the field is left blank for the “minimum fields” (price, area, beds). 
+		 * It should assume the value of a field is Integer.MAX_VALUE if the field is one of the “maximum fields” (again, for price, area or number of bedrooms
+		 */
+		
+		if (minPriceValue == null || minPriceValue.length() == 0)
+		{
+			minPriceValue = "0.00";
+		}
+		if (minAreaValue == null || minAreaValue.length() == 0)
+		{
+			minAreaValue = "0.00";
+		}
+		if (minBedsValue == null || minBedsValue.length() == 0)
+		{
+			minBedsValue = "0.00";
+		}
+		if (maxPriceValue == null || maxPriceValue.length() == 0)
+		{
+			int maxValue = Integer.MAX_VALUE;
+			
+			maxPriceValue = Integer.toString(maxValue);
+		}
+		
+		houseList.printHouses();
+		// Pass arguments into the method
+		//processListing(minPriceValue, maxPriceValue, minAreaValue, maxAreaValue, minBedsValue, maxBedsValue);
+	} 
+	
+	
+	// ------------------------------------------------------------------
+	
+	/* 
+	 * Process the data selected and entered by user.
+	 * 
+	 * @param minPriceValue
+	 * @param maxPriceValue
+	 * @param minAreaValue
+	 * @param maxAreaValue
+	 * @param minBedsValue
+	 * @param maxBedsValue
+	 */
+	private void processListing(String minPriceValue, String maxPriceValue, String minAreaValue, String maxAreaValue,
+			String minBedsValue, String maxBedsValue) 
+	{
+		Properties props = new Properties(); 
+		props.setProperty("Minimum Price", minPriceValue); 
+		props.setProperty("Maximum Price", maxPriceValue); 
+		props.setProperty("Minimum Area", minAreaValue); 
+		props.setProperty("Maximum Area", maxAreaValue); 
+		props.setProperty("Minimum Beds", minBedsValue);
+		props.setProperty("Maximum Beds", maxBedsValue);
+		
+		houseList.processListing(props);
+		
+		/*
+		// Convert the parameters from String to int
+		int minPrice = Integer.parseInt(minPriceValue);
+		int maxPrice = Integer.parseInt(maxPriceValue);
+		int minArea = Integer.parseInt(minAreaValue);
+		int maxArea = Integer.parseInt(maxAreaValue);
+		int minBeds = Integer.parseInt(minBedsValue);
+		int maxBeds = Integer.parseInt(maxBedsValue);
+				
+		// Create a Requirement object
+		Requirement r = new Requirement(minPrice, maxPrice, minArea, maxArea, minBeds, maxBeds);
+		
+		*/
+	}
+
+
+	// ------------------------------------------------------------------
+	
 	private void populateFields() 
 	{
 		// Set the default value as an empty string
