@@ -33,7 +33,7 @@ import project01.Requirement;
 public class RealEstateScene extends Group
 {
 	// Instance variables
-	private String classname;
+	//private String classname;
 	private HouseList houseList;
 	private TextField minPriceTextField;
 	private TextField maxPriceTextField;
@@ -54,9 +54,8 @@ public class RealEstateScene extends Group
 	 * @param classname
 	 */
 	
-	public RealEstateScene(String classname, HouseList houseList)
+	public RealEstateScene(HouseList houseList)
 	{
-		this.classname = classname;
 		this.houseList = houseList;
 		
 		// Create a container
@@ -94,7 +93,7 @@ public class RealEstateScene extends Group
 		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		titleText.setWrappingWidth(300);
 		titleText.setTextAlignment(TextAlignment.CENTER);
-		titleText.setFill(Color.DARKGREEN);
+		titleText.setFill(Color.BLACK);
 		container.getChildren().add(titleText);	
 		
 		return container;
@@ -238,7 +237,6 @@ public class RealEstateScene extends Group
 			@Override
 			public void handle(ActionEvent e) 
 			{
-				// Process the event
 				processReset(e);
 			} 
 		});
@@ -403,9 +401,9 @@ public class RealEstateScene extends Group
 	 * 
 	 * @param house
 	 */
-	public void updateState(String update)
+	public void updateState(String updatedHouse)
 	{
-	  chosenHomeTextField.setText(update);
+	  chosenHomeTextField.setText(updatedHouse);
 	        
 	}
 	

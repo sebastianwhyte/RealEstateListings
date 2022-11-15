@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import user_interface.RealEstateScene;
@@ -27,10 +27,9 @@ import user_interface.WindowPosition;
 
 public class HouseList 
 {
-	// Instance variables
-	private ArrayList<House> houseList = new ArrayList<>();
-	private ArrayList<House> alreadySeenHouses = new ArrayList<>();		// store the previously seen houses
-	private ArrayList<House> validHouses = new ArrayList<>();
+
+	private List<House> houseList = new ArrayList<>();
+	private List<House> validHouses = new ArrayList<>();
 	private Set<House> seen = new HashSet<>();
 	private int price;
 	private int area;
@@ -119,11 +118,10 @@ public class HouseList
 	 * @param a Requirement object
 	 */
 	public void printHouses(Requirement r)
-	{
-		
+	{		
 		if (validHouses.isEmpty())
 		{
-			// Copy houseList elements into validHouses arraylist
+			// If a house meets the user requirements, then add it to valid houses list
 			for (House h : houseList)
 			{
 				if (h.satisfies(r))
@@ -133,15 +131,6 @@ public class HouseList
 				}		
 			}
 		}
-		else
-		{
-			// Check to see if user has already seen all of the valid available houses
-			if (alreadySeenHouses.size() == validHouses.size())
-			{
-				rScene.updateState("No more available houses");
-	
-			}		
-		}	
 		
 		
 		// Create a Random object
@@ -154,18 +143,11 @@ public class HouseList
 		// Get a random house from the valid house list
 		House house = validHouses.get(randomHouse);
 
-		//seen.add(house);
-			
-		// Update state if the house isn't in the already seen houses list
-		if (!alreadySeenHouses.contains(house))
-		{
-			rScene.updateState(house.toString());
-				
-			
-			alreadySeenHouses.add(house);
-			validHouses.remove(house);
-						
-		}					
+		rScene.updateState(house.toString());
+		
+		
+		seen.add(house);
+		validHouses.remove(house);
 }
 	
 	// ----------------------------------------------------------------
@@ -192,9 +174,9 @@ public class HouseList
 	
 	// ----------------------------------------------------------------
 	
-	public ArrayList<House> getAlreadySeenHouses()
+	public Set<House> getAlreadySeenHouses()
 	{
-		return alreadySeenHouses;
+		return seen;
 	}
 	
 	
@@ -206,7 +188,7 @@ public class HouseList
 	private void createAndShowRealEstateView() 
 	{
 		// Create a new Real Estate Scene object 
-		rScene = new RealEstateScene("Real Estate View", this);
+		rScene = new RealEstateScene(this);
 		// Pass the Real Estate Scene into the current Scene;
 		currentScene = new Scene(rScene);
 		
@@ -218,7 +200,7 @@ public class HouseList
 	// ----------------------------------------------------------------
 	
 	/*
-	 * Swaps to the current scence
+	 * Swaps to the current scene
 	 * 
 	 * @param current scene
 	 */
@@ -234,8 +216,10 @@ public class HouseList
 		
 		// Swap the scene of the stage
 		stage.setScene(currentScene);
+		
 		// Resize the stage to fit the scene size
 		stage.sizeToScene();
+		
 		//Place in stage in center again 
 		WindowPosition.placeCenter(stage);
 		
