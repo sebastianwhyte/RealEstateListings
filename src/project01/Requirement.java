@@ -33,7 +33,7 @@ public class Requirement
 		this.maximumNumberOfBedrooms = maximumNumberOfBedrooms;
 		
 		// Create a House object
-		House house = new House();
+		//House house = new House();
 	}
 	
 	// ---------------------------------------------------------------
@@ -45,11 +45,15 @@ public class Requirement
 	}
 	
 	
+	// ---------------------------------------------------------------
+	
 	public int getMaximumPrice()
 	{
 		return maximumPrice;
 	}
 	
+	
+	// ---------------------------------------------------------------
 	
 	public int getMinimumArea()
 	{
@@ -57,17 +61,23 @@ public class Requirement
 	}
 	
 	
+	// ---------------------------------------------------------------
+	
 	public int getMaximumArea()
 	{
 		return maximumArea;
 	}
 	
 	
+	// ---------------------------------------------------------------
+	
 	public int getMinimumNumberBedrooms()
 	{
 		return minimumNumberOfBedrooms;
 	}
 	
+	
+	// ---------------------------------------------------------------
 	
 	public int getMaximumNumberBedrooms()
 	{

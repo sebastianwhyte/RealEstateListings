@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,12 +21,14 @@ import javafx.scene.text.TextAlignment;
 import project01.HouseList;
 import project01.Requirement;
 
+
 /* This class provides the Scene for the main real estate view
  * 
  * @author Sebastian Whyte
  * @version v1.0, April 2 2022
  *
  */
+
 
 public class RealEstateScene extends Group
 {
@@ -44,6 +45,7 @@ public class RealEstateScene extends Group
 	private Button findDreamHouseButton;
 	private Button notMyDreamButton;
 	private Button resetButton;
+	
 	
 	// ------------------------------------------------------------------
 	
@@ -195,42 +197,49 @@ public class RealEstateScene extends Group
 				
 				
 		
-		// Create find dream house button & add event handler to it
+		// Create "find dream house" button & add event handler to it
 		findDreamHouseButton = new Button("Find my dream house!"); 
 		findDreamHouseButton.setAlignment(Pos.CENTER_LEFT);
+		
 		findDreamHouseButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 			@Override
 			public void handle(ActionEvent e) 
 			{
-				// Do the calculation 
+				notMyDreamButton.setDisable(false);
+				
+				// Process the event
 				processAction(e);
+				
+				findDreamHouseButton.setDisable(true);
 			}
 		});
 		
 		
-		// Create not my dream house button & add event handler to it
+		// Create "not my dream house" button & add event handler to it
 		notMyDreamButton = new Button("Not my dream house - find me another!"); 
+		notMyDreamButton.setDisable(true);
+		
 		notMyDreamButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 			@Override
 			public void handle(ActionEvent e) 
 			{
-				// Do the calculation 
+				// Process the event 
 				processAction(e);
 			} 
 		});
 		
 		
-		// Create find dream house button & add event handler to it
+		// Create a reset button & add event handler to it
 		resetButton = new Button("Reset"); 
 		resetButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 			@Override
 			public void handle(ActionEvent e) 
 			{
-				// Do the calculation 
-				processAction(e);
+				// Process the event
+				processReset(e);
 			} 
 		});
 				
@@ -277,39 +286,54 @@ public class RealEstateScene extends Group
 		
 		/* Check if the user leaves the TextFields empty
 		 * 
-		 * The program should assume the value of a field is 0 if the field is left blank for the “minimum fields” (price, area, beds). 
-		 * It should assume the value of a field is Integer.MAX_VALUE if the field is one of the “maximum fields” (again, for price, area or number of bedrooms
+		 * The program should assume the value of a field is 0 if the field is left blank 
+		 * for the “minimum fields” (price, area, beds). 
+		 * 
+		 * It should assume the value of a field is Integer.MAX_VALUE if the field is 
+		 * one of the “maximum fields” (again, for price, area or number of bedrooms)
+		 *
 		 */
 		
 		if (minPriceValue == null || minPriceValue.length() == 0)
 		{
-			minPriceValue = "0.00";
+			minPriceValue = "0";
 		}
 		if (minAreaValue == null || minAreaValue.length() == 0)
 		{
-			minAreaValue = "0.00";
+			minAreaValue = "0";
 		}
 		if (minBedsValue == null || minBedsValue.length() == 0)
 		{
-			minBedsValue = "0.00";
-		}
+			minBedsValue = "0";
+		}		
 		if (maxPriceValue == null || maxPriceValue.length() == 0)
 		{
-			int maxValue = Integer.MAX_VALUE;
+			int maxPrice = Integer.MAX_VALUE;
 			
-			maxPriceValue = Integer.toString(maxValue);
+			maxPriceValue = Integer.toString(maxPrice);
+		}
+		if (maxAreaValue == null || maxAreaValue.length() == 0)
+		{
+			int maxArea = Integer.MAX_VALUE;
+			
+			maxAreaValue = Integer.toString(maxArea);
+		}
+		if (maxBedsValue == null || maxBedsValue.length() == 0)
+		{
+			int maxBeds = Integer.MAX_VALUE;
+			
+			maxBedsValue = Integer.toString(maxBeds);
 		}
 		
-		houseList.printHouses();
 		// Pass arguments into the method
-		//processListing(minPriceValue, maxPriceValue, minAreaValue, maxAreaValue, minBedsValue, maxBedsValue);
+		setPropertyValues(minPriceValue, maxPriceValue, minAreaValue, maxAreaValue, minBedsValue, maxBedsValue);
 	} 
 	
 	
 	// ------------------------------------------------------------------
 	
 	/* 
-	 * Process the data selected and entered by user.
+	 * Assign the data selected and entered by user into properties/props
 	 * 
 	 * @param minPriceValue
 	 * @param maxPriceValue
@@ -318,7 +342,7 @@ public class RealEstateScene extends Group
 	 * @param minBedsValue
 	 * @param maxBedsValue
 	 */
-	private void processListing(String minPriceValue, String maxPriceValue, String minAreaValue, String maxAreaValue,
+	private void setPropertyValues(String minPriceValue, String maxPriceValue, String minAreaValue, String maxAreaValue,
 			String minBedsValue, String maxBedsValue) 
 	{
 		Properties props = new Properties(); 
@@ -331,30 +355,59 @@ public class RealEstateScene extends Group
 		
 		houseList.processListing(props);
 		
-		/*
-		// Convert the parameters from String to int
-		int minPrice = Integer.parseInt(minPriceValue);
-		int maxPrice = Integer.parseInt(maxPriceValue);
-		int minArea = Integer.parseInt(minAreaValue);
-		int maxArea = Integer.parseInt(maxAreaValue);
-		int minBeds = Integer.parseInt(minBedsValue);
-		int maxBeds = Integer.parseInt(maxBedsValue);
-				
-		// Create a Requirement object
-		Requirement r = new Requirement(minPrice, maxPrice, minArea, maxArea, minBeds, maxBeds);
-		
-		*/
 	}
 
+	
+	// ------------------------------------------------------------------
+	
+	public void processReset(ActionEvent e)
+	{
+		// Clear the already seen houses list
+		houseList.getAlreadySeenHouses().clear();
+		
+		notMyDreamButton.setDisable(true);
+		findDreamHouseButton.setDisable(false);
+		populateFields();
+	}
 
 	// ------------------------------------------------------------------
 	
 	private void populateFields() 
 	{
-		// Set the default value as an empty string
+		// Set the default values as empty strings
 		minPriceTextField.setText("");
-		
+		minAreaTextField.setText("");
+		minBedsTextField.setText("");
+		maxPriceTextField.setText("");
+		maxAreaTextField.setText("");
+		maxBedsTextField.setText("");
+		chosenHomeTextField.setText("");
 	}
-
+	
+	
+	// ------------------------------------------------------------------
+	
+	/* Updates the chosen home Text Field
+	 * 
+	 * @param house
+	 */
+	public void updateState(Object house)
+    {
+        chosenHomeTextField.setText((String)house);
+        
+    }
+	
+	// ------------------------------------------------------------------
+	
+	/* Updates the chosen home Text Field
+	 * 
+	 * @param house
+	 */
+	public void updateState(String update)
+	{
+	  chosenHomeTextField.setText(update);
+	        
+	}
+	
 
 }

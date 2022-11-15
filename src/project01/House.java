@@ -1,10 +1,11 @@
 package project01;
 
-/**
+/*
  * It represents the details of a house for sale.
  * 
  * @author Sebastian Whyte
  * @version February 5, 2022
+ * 
  */
 
 
@@ -22,10 +23,8 @@ public class House
 	 * @param information about the houses
 	 */
 	
-	public House()
-	{
-		
-	}
+	public House() {}
+	
 	
 	public House(String address, int price, int area, int numBedrooms)
 	{
@@ -80,12 +79,14 @@ public class House
 	
 	// ----------------------------------------------------------------
 	
-	/* Print to describe the House data 
+	/* Print to describe the House data
+	 *  
 	 * @return String that describes the house
 	 * 
 	 */
 	public String toString()
 	{
-		return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
+		return address;
+		//return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
 	}
 }

@@ -1,12 +1,9 @@
 package project01;
 
-//import java.util.Scanner;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import user_interface.MainStageContainer;
 import user_interface.WindowPosition;
 import project01.HouseList;
 
@@ -18,11 +15,21 @@ import project01.HouseList;
  *
  */
 
+
 public class HouseListTester extends Application
 {
+	// Instance variables
 	private HouseList availableHouses;
 	private static Stage mainStage;
 	
+	
+	// ------------------------------------------------------------------
+	
+	/*
+	 * Starts the application
+	 * 
+	 * @param a stage
+	 */
 	public void start(Stage primaryStage)
 	{
 		// Copyright and version info 
@@ -51,9 +58,7 @@ public class HouseListTester extends Application
 		{
 			// Create a HouseList object
 			availableHouses = new HouseList("houses.txt");
-			// Test if houses from text file are being added to arraylist
-			System.out.println();
-			//availableHouses.printHouses();
+	
 		}
 		catch(Exception e)
 		{
@@ -66,15 +71,9 @@ public class HouseListTester extends Application
 		
 		mainStage.show();
 		
-		/*
-		// Place stage in the center of the screen
-		WindowPosition.placeCenter(primaryStage);
-		
-		// Show the stage
-		primaryStage.show();
-		*/
-		
 	}
+	
+	// ------------------------------------------------------------------
 	
 	public static Stage getStage()
 	{
@@ -82,43 +81,12 @@ public class HouseListTester extends Application
 	}
 	
 	
+	// ------------------------------------------------------------------
+	
+	// Main method 
 	public static void main(String[] args)
 	{
 		launch(args);
 		
-		/*
-		Scanner sc = new Scanner (System.in);
-		
-		// Create HouseList object & pass file into it
-		HouseList availableHouses = new HouseList("houses.txt");
-		
-		// -------------------------------------------------------
-	
-		{
-			// Prompt user for their requirements & store them
-			System.out.println("Enter your requirements: ");
-			
-			System.out.print("Enter minimum price: ");
-			int minumumPrice = sc.nextInt();
-			System.out.print("Enter maximum price: ");
-			int maxiumumPrice = sc.nextInt();
-			System.out.print("Enter minimum area: ");
-			int minumumArea = sc.nextInt();
-			System.out.print("Enter maximum area: ");
-			int maxiumumArea = sc.nextInt();
-			System.out.print("Enter minimum number of beds: ");
-			int minumumNumberOfBedrooms = sc.nextInt();
-			System.out.print("Enter maximum number of beds: ");
-			int maxiumumNumberOfBedrooms = sc.nextInt();
-			
-			// Pass the variables as arguments into the Requirement object
-			Requirement r = new Requirement(minumumPrice, maxiumumPrice, minumumArea, maxiumumArea, minumumNumberOfBedrooms, maxiumumNumberOfBedrooms);
-			
-			// Print out the results
-			System.out.println("\nResults: ");
-			availableHouses.printHouses(r);
-			System.out.println();
-		}
-		*/
 	}
 }

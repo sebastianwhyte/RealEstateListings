@@ -3,9 +3,11 @@ package project01;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,19 +15,23 @@ import javafx.stage.Stage;
 import user_interface.RealEstateScene;
 import user_interface.WindowPosition;
 
-/**
+/*
  * Contains an ArrayList of House objects. Reads the data from a file called houses.txt and 
  * adds them to the array list. Allows for searching of houses that satisfy requirements.
  * 
  * @author Sebastian Whyte
- * @version February 5, 2022
+ * @version V2.0, April 5, 2022
+ * 
  */
+
 
 public class HouseList 
 {
 	// Instance variables
 	private ArrayList<House> houseList = new ArrayList<>();
 	private ArrayList<House> alreadySeenHouses = new ArrayList<>();		// store the previously seen houses
+	private ArrayList<House> validHouses = new ArrayList<>();
+	private Set<House> seen = new HashSet<>();
 	private int price;
 	private int area;
 	private int numBedrooms;
@@ -34,6 +40,7 @@ public class HouseList
 	private Stage stage;
 	private Scene currentScene;
 
+	
 	// ----------------------------------------------------------------
 	
 	/* Constructor
@@ -78,89 +85,93 @@ public class HouseList
 		}
 	}
 	
+	
 	// ----------------------------------------------------------------
 	
-
-	// TESTING OUTPUT
-	public void printHouses()
-	{
-		// Create a Random object
-		Random random = new Random();
-					
-		// Assigns a random element from houseList to the House object
-		House house = houseList.get(random.nextInt(houseList.size()));
-			
-		// TEST OUTPUT 
-		System.out.println("Chosen Home: " + house);
-		System.out.println();
-		
-		// Add already seen houses to list
-		alreadySeenHouses.add(house);
-		houseList.remove(house);
-		
-		// TEST OUTPUT for available houses
-		System.out.println("Available Houses:");
-		
-		for (House h : houseList)
-		{
-			if (houseList.isEmpty())
-			{
-				System.out.println("No more available houses");
-			}
-			
-			System.out.println(h);
-		}
-		
-		// Print gap between the list outputs
-		System.out.println();
-		
-		// TEST OUTPUT for already seen houses
-		System.out.println("Houses already seen:");
-		
-		for (House h : alreadySeenHouses)
-		{
-			// Try to add house to already seen list
-			try
-			{
-				System.out.println(h);
-			}
-			catch (Exception e)
-			{
-				System.out.println("No more houses to add");
-			}
-			
-		}
-		
-		// Print gap are the list outputs
-		System.out.println();
-		
-		//System.out.println(h.toString());	
-		
-		/*
-		for (House h: houseList)
-		{
-			System.out.println(h);
-		}
-		*/
-	}
+	/* Process the properties that are passed in
+	 * 
+	 * @param props from RealEstateScene : setPropertyValues
+	 */
 	
+	public void processListing(Properties props) 
+	{
+		int minPrice = Integer.parseInt(props.getProperty("Minimum Price")); 
+		int maxPrice = Integer.parseInt(props.getProperty("Maximum Price")); 
+		int minArea = Integer.parseInt(props.getProperty("Minimum Area"));
+		int maxArea = Integer.parseInt(props.getProperty("Maximum Area"));
+		int minBeds = Integer.parseInt(props.getProperty("Minimum Beds"));
+		int maxBeds = Integer.parseInt(props.getProperty("Maximum Beds"));
+					
+		
+		// Create a Requirement object
+		Requirement r = new Requirement(minPrice, maxPrice, minArea, maxArea, minBeds, maxBeds);
+		
+		// Pass in the requirement object & check if it satisfies the requirement
+		printHouses(r);
+		
+	}
+
+
 	// ----------------------------------------------------------------
 	
 	/* Print all the houses that satisfy the requirement r 
+	 * 
 	 * @param a Requirement object
 	 */
 	public void printHouses(Requirement r)
 	{
-		for (House h: houseList)
+		
+		if (validHouses.isEmpty())
 		{
-			System.out.println(h.toString());
-			
+			// Copy houseList elements into validHouses arraylist
+			for (House h : houseList)
+			{
+				if (h.satisfies(r))
+				{
+					validHouses.add(h);
+					
+				}		
+			}
 		}
-	}
+		else
+		{
+			// Check to see if user has already seen all of the valid available houses
+			if (alreadySeenHouses.size() == validHouses.size())
+			{
+				rScene.updateState("No more available houses");
+	
+			}		
+		}	
+		
+		
+		// Create a Random object
+		Random random = new Random();
+		
+		
+		// Assigns a random element from houseList to the House object
+		int randomHouse = random.nextInt(validHouses.size());
+						
+		// Get a random house from the valid house list
+		House house = validHouses.get(randomHouse);
+
+		//seen.add(house);
+			
+		// Update state if the house isn't in the already seen houses list
+		if (!alreadySeenHouses.contains(house))
+		{
+			rScene.updateState(house.toString());
+				
+			
+			alreadySeenHouses.add(house);
+			validHouses.remove(house);
+						
+		}					
+}
 	
 	// ----------------------------------------------------------------
 	
 	/* Returns concatenated string of the details of all houses that satisfy the requirement r 
+	 * 
 	 * @param a Requirement object
 	 * @return String: result of concatenated string of a description of the houses 
 	 * 
@@ -181,6 +192,14 @@ public class HouseList
 	
 	// ----------------------------------------------------------------
 	
+	public ArrayList<House> getAlreadySeenHouses()
+	{
+		return alreadySeenHouses;
+	}
+	
+	
+	// ----------------------------------------------------------------
+	
 	/*
 	 * Creates and displays the Real Estate View
 	 */
@@ -191,7 +210,7 @@ public class HouseList
 		// Pass the Real Estate Scene into the current Scene;
 		currentScene = new Scene(rScene);
 		
-		// Make the view visible by installing it into the stage 
+		// Make the scene visible by installing it into the stage 
 		swapToView(currentScene);		
 	}
 
@@ -220,61 +239,6 @@ public class HouseList
 		//Place in stage in center again 
 		WindowPosition.placeCenter(stage);
 		
-	}
-
-	/**
-	 * @param props
-	 */
-	public void processListing(Properties props) 
-	{
-		// UPDATE THIS TO REFLECT HOUSE LIST / REAL ESTATE LISTINGS PROJECT	
-		// Copy the flow of Invoice : processInvoice 
-		int minPrice = Integer.parseInt(props.getProperty("Minimum Price")); 
-		int maxPrice = Integer.parseInt(props.getProperty("Maximum Price")); 
-		int minArea = Integer.parseInt(props.getProperty("Minimum Area"));
-		int maxArea = Integer.parseInt(props.getProperty("Maximum Area"));
-		int minBeds = Integer.parseInt(props.getProperty("Minimum Beds"));
-		int maxBeds = Integer.parseInt(props.getProperty("Maximum Beds"));
-					
-		
-		/*
-		 * TAKE A RANDOM INDEX FROM THE HOUSE LIST ARRAYLIST, THEN ITERATE THROUGH THE
-		 * LIST TO PICK A RANDOM ELEMENT. PASS THAT ELEMENT INTO PRINT HOUSES() METHOD TO TEST
-		 * 
-		 * 
-			// Convert the parameters from String to int
-			int minPrice = Integer.parseInt(minPriceValue);
-			int maxPrice = Integer.parseInt(maxPriceValue);
-			int minArea = Integer.parseInt(minAreaValue);
-			int maxArea = Integer.parseInt(maxAreaValue);
-			int minBeds = Integer.parseInt(minBedsValue);
-			int maxBeds = Integer.parseInt(maxBedsValue);
-			
-		*/
-		
-		// Create a Requirement object
-		Requirement r = new Requirement(minPrice, maxPrice, minArea, maxArea, minBeds, maxBeds);
-		
-		//THEN PASS THE REQUIREMENT OBJECT INTO PRINT HOUSES
-		printHouses();
-	
-		
-		
-		/*			
-		// Set default value to 0
-		double totalBill = 0;
-					
-		// Add all the items in the order together
-		double preTaxSum = dripCost + mochaCost + sconesCost + sandwichCost;
-		// Now apply tax
-		double totalTax = preTaxSum * (salesTax/100);
-		totalBill = preTaxSum + totalTax;
-					
-					
-		String formatTotalBill = String.format("%.2f", totalBill);
-					
-		invoiceView.updateState("Total Bill", formatTotalBill);
-		*/		
 	}
 
 }
