@@ -11,7 +11,7 @@ import project01.HouseList;
  * Tester class for Real Estate Listing project
  * 
  * @author Sebastian Whyte
- * @version 2.0 (03/28/2022)
+ * @version V2.0 (03/28/2022)
  *
  */
 

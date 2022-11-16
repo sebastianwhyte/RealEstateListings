@@ -20,7 +20,7 @@ import user_interface.WindowPosition;
  * adds them to the array list. Allows for searching of houses that satisfy requirements.
  * 
  * @author Sebastian Whyte
- * @version V2.0, April 5, 2022
+ * @version V2.0 (04/05/2022)
  * 
  */
 

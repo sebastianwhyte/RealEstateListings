@@ -25,7 +25,7 @@ import project01.Requirement;
 /* This class provides the Scene for the main real estate view
  * 
  * @author Sebastian Whyte
- * @version v1.0, April 2 2022
+ * @version V2.0 (04/02/2022)
  *
  */
 
@@ -33,7 +33,6 @@ import project01.Requirement;
 public class RealEstateScene extends Group
 {
 	// Instance variables
-	//private String classname;
 	private HouseList houseList;
 	private TextField minPriceTextField;
 	private TextField maxPriceTextField;
