@@ -57,15 +57,14 @@ public class RealEstateScene extends Group
 	{
 		this.houseList = houseList;
 		
-		// Create a container
+		// Container to hold the form
 		VBox container = new VBox(10);
 		container.setPadding(new Insets(15,5,5,5));
 		
-		// Create the GUI components and add them to the panel
+		
 		container.getChildren().add(createTitle());
 		container.getChildren().add(createFormContent());
 		
-		// Add the Vbox as a child of the Group
 		getChildren().add(container);
 		
 		// Pre-populate the fields
@@ -78,16 +77,16 @@ public class RealEstateScene extends Group
 	/*
 	 * Creates the title & sets its properties
 	 * 
-	 * @return container to hold the title
+	 * @return container that holds the title
 	 */
 	private Node createTitle() 
 	{
-		// Create a hbox (horizontal) container to hold the title
+		// Title container
 		HBox container = new HBox();
-		// Set the hbox in the center
+	
 		container.setAlignment(Pos.CENTER);
 		
-		// Create the title and set its properties
+		
 		Text titleText = new Text("Real Estate Listings");
 		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 		titleText.setWrappingWidth(300);
@@ -108,97 +107,96 @@ public class RealEstateScene extends Group
 	
 	private Node createFormContent() 
 	{
-		// Create a vbox (vertical) container to hold the form
+		// Container to hold the main form
 		VBox vbox = new VBox(20);
 		
-		// Create a grid layout
+		
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25,25,25,25));
 		
-		// Create minimum price text label then add it to the grid
+		
 		Text minPriceLabel = new Text("Minimum Price: ");
 		minPriceLabel.setWrappingWidth(150);
 		minPriceLabel.setTextAlignment(TextAlignment.RIGHT); 
 		grid.add(minPriceLabel, 0, 0);
 		
-		// Create TextField for minimum price
+		
 		minPriceTextField = new TextField();
 		minPriceTextField.setMinSize(100, 20);
 		grid.add(minPriceTextField, 1, 0);
 		
-		// Create max price text label then add it to the grid
+		
 		Text maxPriceLabel = new Text("Maximum Price: ");
 		maxPriceLabel.setWrappingWidth(150);
 		maxPriceLabel.setTextAlignment(TextAlignment.RIGHT); 
 		grid.add(maxPriceLabel, 0, 1);
 				
-		// Create TextField for max price
+		
 		maxPriceTextField = new TextField();
 		maxPriceTextField.setMinSize(100, 20);
 		grid.add(maxPriceTextField, 1, 1);
 		
-		// Create minimum area label then add it to grid
+		
 		Text minAreaLabel = new Text("Minimum Area: "); 
 		minAreaLabel.setWrappingWidth(150); 
 		minAreaLabel.setTextAlignment(TextAlignment.RIGHT); 
 		grid.add(minAreaLabel, 0, 2);
 				
-		// Create Text Field for minimum price 
+		
 		minAreaTextField = new TextField();
 		minAreaTextField.setMinSize(100, 20); 
 		grid.add(minAreaTextField, 1, 2);
 				
-		// Create max area label then add it to grid
+		
 		Text maxAreaLabel = new Text("Maximum Area: "); 
 		maxAreaLabel.setWrappingWidth(150); 
 		maxAreaLabel.setTextAlignment(TextAlignment.RIGHT); 
 		grid.add(maxAreaLabel, 0, 3);
 				
-		// Create text field for max area
+		
 		maxAreaTextField = new TextField(); 
 		maxAreaTextField.setMinSize(100, 20);
 		grid.add(maxAreaTextField, 1, 3);
 				
-		// Create minimum beds label then add it to grid
+		
 		Text minBedsLabel = new Text("Minimum Beds: "); 
 		minBedsLabel.setWrappingWidth(150); 
 		minBedsLabel.setTextAlignment(TextAlignment.RIGHT); 
 		grid.add(minBedsLabel, 0, 4);
 					
-		// Create text field for minimum beds
+		
 		minBedsTextField = new TextField(); 
 		minBedsTextField.setMinSize(100, 20);
 		grid.add(minBedsTextField, 1, 4);
 				
-		// Create max beds label then add it to grid
+		
 		Text maxBedsLabel = new Text("Maximum Beds: "); 
 		maxBedsLabel.setWrappingWidth(150); 
 		maxBedsLabel.setTextAlignment(TextAlignment.RIGHT); 
 		grid.add(maxBedsLabel, 0, 5);
 				
-		// Create text field for max beds
+		
 		maxBedsTextField = new TextField(); 
 		grid.add(maxBedsTextField, 1, 5);
 		
-		// Create chosen home label then add it to grid
+		
 		Text chosenHomeLabel = new Text("Chosen Home: "); 
 		chosenHomeLabel.setWrappingWidth(150); 
 		chosenHomeLabel.setTextAlignment(TextAlignment.RIGHT); 
 		grid.add(chosenHomeLabel, 0, 6);
 						
-		// Create text field for max beds
+		
 		chosenHomeTextField = new TextField(); 
 		grid.add(chosenHomeTextField, 1, 6);
 				
 				
-		
-		// Create "find dream house" button & add event handler to it
 		findDreamHouseButton = new Button("Find my dream house!"); 
 		findDreamHouseButton.setAlignment(Pos.CENTER_LEFT);
 		
+		// Once the user clicks 'Find My Dream House' button, disable it and enable the 'Not My Dram House' button
 		findDreamHouseButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
 			@Override
@@ -214,7 +212,7 @@ public class RealEstateScene extends Group
 		});
 		
 		
-		// Create "not my dream house" button & add event handler to it
+		// Disable this button if the user hasn't clicked anything yet
 		notMyDreamButton = new Button("Not my dream house - find me another!"); 
 		notMyDreamButton.setDisable(true);
 		
@@ -223,13 +221,11 @@ public class RealEstateScene extends Group
 			@Override
 			public void handle(ActionEvent e) 
 			{
-				// Process the event 
 				processAction(e);
 			} 
 		});
 		
 		
-		// Create a reset button & add event handler to it
 		resetButton = new Button("Reset"); 
 		resetButton.setOnAction(new EventHandler<ActionEvent>() 
 		{
@@ -241,20 +237,18 @@ public class RealEstateScene extends Group
 		});
 				
 		
-		// Create hbox container to hold the buttons
+		// HBox containers to hold the buttons
 		HBox buttonContainer = new HBox(10);
 		buttonContainer.setAlignment(Pos.CENTER);
 		buttonContainer.setPadding(new Insets(5,20,5,20));
 		buttonContainer.getChildren().add(findDreamHouseButton); 
 		buttonContainer.getChildren().add(notMyDreamButton);
 		
-		// Create hbox container to hold rest button
 		HBox resetButtonContainer = new HBox();
 		resetButtonContainer.setAlignment(Pos.CENTER);
 		resetButtonContainer.getChildren().add(resetButton);
 		
 		
-		// Add the grid and button container to the vbox
 		vbox.getChildren().add(grid);
 		vbox.getChildren().add(buttonContainer);
 		vbox.getChildren().add(resetButtonContainer);
@@ -283,11 +277,11 @@ public class RealEstateScene extends Group
 		
 		/* Check if the user leaves the TextFields empty
 		 * 
-		 * The program should assume the value of a field is 0 if the field is left blank 
+		 * The program should assume that that value of the field is 0 if its left blank
 		 * for the “minimum fields” (price, area, beds). 
 		 * 
-		 * It should assume the value of a field is Integer.MAX_VALUE if the field is 
-		 * one of the “maximum fields” (again, for price, area or number of bedrooms)
+		 * Assume that the value of a field is Integer.MAX_VALUE if the field is 
+		 * one of the “maximum fields”
 		 *
 		 */
 		
@@ -322,7 +316,7 @@ public class RealEstateScene extends Group
 			maxBedsValue = Integer.toString(maxBeds);
 		}
 		
-		// Pass arguments into the method
+		
 		setPropertyValues(minPriceValue, maxPriceValue, minAreaValue, maxAreaValue, minBedsValue, maxBedsValue);
 	} 
 	
@@ -359,7 +353,7 @@ public class RealEstateScene extends Group
 	
 	public void processReset(ActionEvent e)
 	{
-		// Clear the already seen houses list
+		// Clear already seen houses once the user clicks 'Reset'
 		houseList.getAlreadySeenHouses().clear();
 		
 		notMyDreamButton.setDisable(true);
@@ -368,6 +362,9 @@ public class RealEstateScene extends Group
 	}
 
 	// ------------------------------------------------------------------
+	
+	/* Pre-populates the text fields with empty strings
+	 */
 	
 	private void populateFields() 
 	{

@@ -94,7 +94,8 @@ public class WindowPosition
 	//--------------------------------------------------------------
 	
 	/* 
-	* Used to place a stage at the bottom right corner of the screen *
+	* Used to place a stage at the bottom right corner of the screen 
+	* 
 	* @param s Stage to place at the bottom-right corner of screen 
 	* 
 	*/

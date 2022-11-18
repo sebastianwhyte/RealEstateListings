@@ -32,8 +32,6 @@ public class Requirement
 		this.minimumNumberOfBedrooms = minimumNumberOfBedrooms;
 		this.maximumNumberOfBedrooms = maximumNumberOfBedrooms;
 		
-		// Create a House object
-		//House house = new House();
 	}
 	
 	// ---------------------------------------------------------------

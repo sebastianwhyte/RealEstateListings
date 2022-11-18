@@ -7,7 +7,7 @@ import javafx.stage.WindowEvent;
 import user_interface.WindowPosition;
 import project01.HouseList;
 
-/**
+/*
  * Tester class for Real Estate Listing project
  * 
  * @author Sebastian Whyte
@@ -32,7 +32,6 @@ public class HouseListTester extends Application
 	 */
 	public void start(Stage primaryStage)
 	{
-		// Copyright and version info 
 		System.out.println("Real Estate Listings Version 1.00"); 
 		System.out.println("Copyright ©2022 Sebastian Whyte");
 		
@@ -67,6 +66,7 @@ public class HouseListTester extends Application
 		}
 		
 		
+		// Place the main stage container in the center of screen
 		WindowPosition.placeCenter(mainStage);
 		
 		mainStage.show();
@@ -83,7 +83,6 @@ public class HouseListTester extends Application
 	
 	// ------------------------------------------------------------------
 	
-	// Main method 
 	public static void main(String[] args)
 	{
 		launch(args);

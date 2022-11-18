@@ -50,7 +50,7 @@ public class HouseList
 		// Scanner object to read file
 		Scanner fileIn = null;
 				
-		// Try to open file
+		
 		try
 		{
 			fileIn = new Scanner(new File(filename));
@@ -65,21 +65,20 @@ public class HouseList
 		// While file has more data, create House objects
 		while (fileIn.hasNext())
 		{
-				// Temp variables to save data for each house
+				
 				address = fileIn.next();
 				price = fileIn.nextInt();
 				area = fileIn.nextInt();
 				numBedrooms = fileIn.nextInt();
 			
-				// Create a House object and pass in the temp variables as arguments
 				House house = new House(address, price, area, numBedrooms);
 				
-				// Add new house to houseList
 				houseList.add(house);
 				
+				// Get the main container stage
 				stage = HouseListTester.getStage();
 						
-				// Call to set up the real estate view
+				// Set up the real estate view
 				createAndShowRealEstateView();
 		}
 	}
@@ -101,11 +100,8 @@ public class HouseList
 		int minBeds = Integer.parseInt(props.getProperty("Minimum Beds"));
 		int maxBeds = Integer.parseInt(props.getProperty("Maximum Beds"));
 					
-		
-		// Create a Requirement object
 		Requirement r = new Requirement(minPrice, maxPrice, minArea, maxArea, minBeds, maxBeds);
 		
-		// Pass in the requirement object & check if it satisfies the requirement
 		printHouses(r);
 		
 	}
@@ -133,18 +129,15 @@ public class HouseList
 		}
 		
 		
-		// Create a Random object
 		Random random = new Random();
 		
-		
-		// Assigns a random element from houseList to the House object
+		// Get a random house from the valid houses list 
 		int randomHouse = random.nextInt(validHouses.size());
 						
-		// Get a random house from the valid house list
+		// Get a that random house
 		House house = validHouses.get(randomHouse);
 
 		rScene.updateState(house.toString());
-		
 		
 		seen.add(house);
 		validHouses.remove(house);
@@ -154,8 +147,8 @@ public class HouseList
 	
 	/* Returns concatenated string of the details of all houses that satisfy the requirement r 
 	 * 
-	 * @param a Requirement object
-	 * @return String: result of concatenated string of a description of the houses 
+	 * @param user requirement(s)
+	 * @return result of concatenated string of a description of the houses 
 	 * 
 	 */	
 	public String getHouses(Requirement r)
@@ -174,6 +167,10 @@ public class HouseList
 	
 	// ----------------------------------------------------------------
 	
+	/* Retrieve the set containing the houses that were already seen
+	 * 
+	 * @return set 
+	 */
 	public Set<House> getAlreadySeenHouses()
 	{
 		return seen;
@@ -182,14 +179,12 @@ public class HouseList
 	
 	// ----------------------------------------------------------------
 	
-	/*
-	 * Creates and displays the Real Estate View
+	/* Creates and displays the Real Estate View
 	 */
 	private void createAndShowRealEstateView() 
 	{
-		// Create a new Real Estate Scene object 
 		rScene = new RealEstateScene(this);
-		// Pass the Real Estate Scene into the current Scene;
+		
 		currentScene = new Scene(rScene);
 		
 		// Make the scene visible by installing it into the stage 
@@ -207,7 +202,6 @@ public class HouseList
 	
 	private void swapToView(Scene currentScene) 
 	{
-		// Check if the scene is null
 		if (currentScene == null)
 	      {
 	    	  System.out.println("HouseList.swapToView(): Missing view for display"); 
@@ -220,7 +214,6 @@ public class HouseList
 		// Resize the stage to fit the scene size
 		stage.sizeToScene();
 		
-		//Place in stage in center again 
 		WindowPosition.placeCenter(stage);
 		
 	}
