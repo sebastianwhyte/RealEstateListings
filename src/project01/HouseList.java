@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import user_interface.RealEstateScene;
 import user_interface.WindowPosition;
@@ -77,6 +78,7 @@ public class HouseList
 				
 				// Get the main container stage
 				stage = HouseListTester.getStage();
+				stage.getIcons().add(new Image("app-icon.png"));
 						
 				// Set up the real estate view
 				createAndShowRealEstateView();
@@ -215,7 +217,6 @@ public class HouseList
 		stage.sizeToScene();
 		
 		WindowPosition.placeCenter(stage);
-		
-	}
 
+	}
 }

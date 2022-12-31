@@ -9,7 +9,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Shadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -61,7 +65,6 @@ public class RealEstateScene extends Group
 		VBox container = new VBox(10);
 		container.setPadding(new Insets(15,5,5,5));
 		
-		
 		container.getChildren().add(createTitle());
 		container.getChildren().add(createFormContent());
 		
@@ -85,15 +88,18 @@ public class RealEstateScene extends Group
 		HBox container = new HBox();
 	
 		container.setAlignment(Pos.CENTER);
-		
-		
-		Text titleText = new Text("Real Estate Listings");
-		titleText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-		titleText.setWrappingWidth(300);
-		titleText.setTextAlignment(TextAlignment.CENTER);
-		titleText.setFill(Color.BLACK);
-		container.getChildren().add(titleText);	
-		
+
+		// Label for inserting logo
+		Label logo = new Label();
+
+		// Image to use for the label
+		Image img = new Image("Real-Estate-Logo-2.png");
+		ImageView imageView = new ImageView(img);
+		logo.setGraphic(imageView);
+
+
+		container.getChildren().add(logo);
+
 		return container;
 	}
 	
@@ -109,8 +115,7 @@ public class RealEstateScene extends Group
 	{
 		// Container to hold the main form
 		VBox vbox = new VBox(20);
-		
-		
+
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);

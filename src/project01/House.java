@@ -86,7 +86,6 @@ public class House
 	 */
 	public String toString()
 	{
-		return address;
-		//return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
+		return "Address: " + address + ", Price: " + price + ", Area: " + area + ", Bedrooms: " + numBedrooms;
 	}
 }
