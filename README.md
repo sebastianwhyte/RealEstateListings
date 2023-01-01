@@ -1,6 +1,6 @@
 # RealEstateListings
 
-### An application that displays houses that meet the end user's requirements.
+### A JAVAFX application that displays houses which meet the end user's requirements.
 
 A list of houses are populated by a text file which includes the address, the number of bedrooms, the square footage, and the number of bathrooms. The graphical interface consists of text fields where the user enters their requirements for a house. 
 
